@@ -2,37 +2,26 @@ package com.letrix.anime.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import com.letrix.anime.R
+import com.letrix.anime.data.Anime
+import com.letrix.anime.data.Server
+import com.letrix.anime.ui.info.ServerBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    private var _info: Int? = null
+class MainActivity : AppCompatActivity(), ServerBottomSheet.ItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        /*val navController = findNavController(R.id.nav_host_fragment)
-        navController.addOnDestinationChangedListener { _, destination, arguments ->
-            run {
-                d("${destination.label} id: ${destination.id} $arguments, _info = $_info, backStack.count = ${navController.backStack.count()}")
-                if (destination.label == "InfoFragment" && navController.backStack.count() <= 4) _info = destination.id
-            }
-        }*/
     }
 
-    override fun onBackPressed() {
-        /*val navController = findNavController(R.id.nav_host_fragment)
-        if (navController.currentDestination?.label == "InfoFragment" && navController.previousBackStackEntry?.destination?.label == "GenreFragment") {
-            navController.popBackStack()
-            while (navController.currentDestination?.label != "InfoFragment" && navController.previousBackStackEntry?.destination?.label != "GenreFragment") {
-                navController.popBackStack()
-            }
-            navController.popBackStack(R.id.infoFragment, false)
-        } else {
-            super.onBackPressed()
-        }*/
-        super.onBackPressed()
+    override fun onItemClick(serverList: List<Server>, server: Int, anime: Anime, episode: Int) {
+        findNavController(R.id.nav_host_fragment).navigate(
+            R.id.playerFragment,
+            bundleOf("servers" to serverList.toTypedArray(), "selected" to server, "anime" to anime, "episode" to episode)
+        )
     }
 }

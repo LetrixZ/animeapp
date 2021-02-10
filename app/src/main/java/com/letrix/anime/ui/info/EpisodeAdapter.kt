@@ -12,7 +12,7 @@ class EpisodeAdapter(private val list: List<String>, private val clickListener: 
             binding.root.text = episode
             binding.root.isCheckable = false
             binding.root.setOnClickListener {
-                clickListener.onEpisode(episode)
+                clickListener.onEpisode(layoutPosition + 1)
             }
         }
     }
@@ -27,6 +27,6 @@ class EpisodeAdapter(private val list: List<String>, private val clickListener: 
     override fun getItemCount(): Int = list.size
 
     interface OnItemClick {
-        fun onEpisode(episodeId: String)
+        fun onEpisode(episode: Int)
     }
 }

@@ -11,10 +11,11 @@ class ApiRepository @Inject constructor(
 
     suspend fun getInfo(id: String) = apiService.getInfo(id)
 
+    suspend fun getServers(id: String, episode: Int) = apiService.getServers(id, episode)
+
     suspend fun getGenre(genre: String) = apiService.getGenre(genre)
 
     suspend fun getHome(): List<Anime.List> {
-        /*delaySimulation()*/
         return apiService.getHomeList()
     }
 

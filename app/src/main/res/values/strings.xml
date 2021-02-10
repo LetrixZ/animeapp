@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Anime</string>
-    <string name="episode_n">Episode %s</string>
+    <string name="episode_n">Episode %d</string>
+    <string name="episode_ns">Episode %s</string>
     <string name="likes_n">%s likes</string>
     <string name="episodes">Episodes</string>
     <string name="featured">Featured Weeklies</string>
@@ -11,4 +12,11 @@
     <string name="ovas">OVAs</string>
     <string name="ongoing">Ongoing</string>
     <string name="finished">Finished</string>
+    <string name="no_servers">No servers available</string>
+    <string name="server_error">An error occurred. Please retry.</string>
+    <string name="episode_title">%s | Episode %d</string>
+    <plurals name="type_episodes">
+        <item quantity="one">%s | %d episode</item>
+        <item quantity="other">%s | %d episodes</item>
+    </plurals>
 </resources>

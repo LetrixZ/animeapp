@@ -1,9 +1,9 @@
 package com.letrix.anime.ui.info
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,9 +14,7 @@ import com.letrix.anime.R
 import com.letrix.anime.data.Anime
 import com.letrix.anime.databinding.FragmentInfoBinding
 import com.letrix.anime.utils.ImageLoader
-import com.letrix.anime.utils.Status
-import com.letrix.anime.ui.info.InfoFragmentArgs
-import com.letrix.anime.ui.info.InfoFragmentDirections
+import com.letrix.anime.utils.Status.*
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +27,7 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
     private val viewModel by viewModels<InfoViewModel>()
     private val args by navArgs<InfoFragmentArgs>()
     private lateinit var binding: FragmentInfoBinding
+    private lateinit var anime: Anime
 
     private var episodeLayoutManager: FlexboxLayoutManager? = null
 
@@ -55,16 +54,17 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
     private fun setObservers() {
         viewModel.info.observe(viewLifecycleOwner, {
             when (it.status) {
-                Status.SUCCESS -> {
+                SUCCESS -> {
                     binding.progressBar.isVisible = false
                     if (it.data != null) {
+                        anime = it.data
                         setupData(it.data)
                     }
                 }
-                Status.LOADING -> {
+                LOADING -> {
                     binding.progressBar.isVisible = true
                 }
-                Status.ERROR -> {
+                ERROR -> {
                     binding.progressBar.isVisible = false
                     binding.errorMessage.isVisible = true
                     binding.errorMessage.text = it.message
@@ -73,9 +73,7 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
         })
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setupData(data: Anime) {
-        d(data.toString())
         binding.apply {
             ImageLoader.loadImage(data.poster, poster)
             title.text = data.title
@@ -83,7 +81,7 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
             synopsis.text = data.synopsis!!
             state.text = if (data.ongoing!!) getString(R.string.ongoing) else getString(R.string.finished)
             state.setTextColor(ContextCompat.getColor(requireContext(), if (data.ongoing) R.color.green_500 else R.color.red_500))
-            typeEpisodes.text = "${data.type!!} | ${data.totalEpisodes!!} episodios"
+            typeEpisodes.text = resources.getQuantityString(R.plurals.type_episodes, data.totalEpisodes!!, data.type, data.totalEpisodes)
             genres.adapter = GenreAdapter(data.genres!!, this@InfoFragment)
             genres.layoutManager = FlexboxLayoutManager(context, FlexDirection.ROW, FlexWrap.WRAP).also {
                 it.alignItems = AlignItems.CENTER
@@ -91,7 +89,7 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
             }
             episodes.adapter = EpisodeAdapter(buildList {
                 for (i in 1..data.totalEpisodes) {
-                    add(element = getString(R.string.episode_n, i.toString().padStart(data.totalEpisodes.toString().length, '0')))
+                    add(element = getString(R.string.episode_ns, i.toString().padStart(data.totalEpisodes.toString().length, '0')))
                 }
             }, this@InfoFragment)
             episodes.layoutManager = episodeLayoutManager
@@ -115,8 +113,15 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
         findNavController().navigate(InfoFragmentDirections.actionInfoFragmentToGenreFragment(genre.replace(" ", "-")))
     }
 
-    override fun onEpisode(episodeId: String) {
+    private fun showServers(episode: Int) {
+        ServerBottomSheet().also {
+            it.arguments = bundleOf("anime" to anime, "episode" to episode)
+            it.show(childFragmentManager, null)
+        }
+    }
 
+    override fun onEpisode(episode: Int) {
+        showServers(episode)
     }
 
 }

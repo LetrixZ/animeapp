@@ -10,6 +10,7 @@ import com.letrix.anime.data.Anime
 import com.letrix.anime.ui.AnimeAdapter
 import com.letrix.anime.ui.epoxy.AnimeModel_
 import com.letrix.anime.ui.epoxy.header
+import com.letrix.anime.utils.Util
 import kotlin.math.ln
 import kotlin.math.pow
 
@@ -21,7 +22,7 @@ class HomeController(private val context: Context, private val clickListener: An
         data?.forEachIndexed { index, list ->
             header {
                 id(list.title)
-                title(list.title)
+                title(Util.getTitle(list.title, context))
             }
             carousel {
                 id(list.title + "_car")
@@ -31,7 +32,7 @@ class HomeController(private val context: Context, private val clickListener: An
                             .withEpisodeThumbnailLayout()
                             .id(anime.id)
                             .title(anime.title)
-                            .extra(context.getString(R.string.episode_n, anime.latestEpisode.toString()))
+                            .extra(context.getString(R.string.episode_n, anime.latestEpisode))
                             .poster(Uri.parse(anime.poster))
                             .clickListener { _ ->
                                 clickListener.onClick(anime)
@@ -39,7 +40,7 @@ class HomeController(private val context: Context, private val clickListener: An
                         1 -> AnimeModel_()
                             .id(anime.id)
                             .title(anime.title)
-                            .extra(context.getString(R.string.episode_n, anime.latestEpisode.toString()))
+                            .extra(context.getString(R.string.episode_n, anime.latestEpisode))
                             .poster(Uri.parse(anime.poster))
                             .clickListener { _ ->
                                 clickListener.onClick(anime)

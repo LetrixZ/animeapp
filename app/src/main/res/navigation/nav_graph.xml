@@ -45,4 +45,33 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out_right_2" />
     </fragment>
+    <fragment
+        android:id="@+id/serverBottomSheet"
+        android:name="com.letrix.anime.ui.info.ServerBottomSheet"
+        android:label="ServerBottomSheet" >
+        <argument
+            android:name="episode"
+            app:argType="integer" />
+        <argument
+            android:name="anime"
+            app:argType="com.letrix.anime.data.Anime" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerFragment"
+        android:name="com.letrix.anime.ui.player.PlayerFragment"
+        android:label="PlayerFragment" >
+        <argument
+            android:name="servers"
+            app:argType="com.letrix.anime.data.Server[]" />
+        <argument
+            android:name="anime"
+            app:argType="com.letrix.anime.data.Anime" />
+        <argument
+            android:name="episode"
+            app:argType="integer" />
+        <argument
+            android:name="selected"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

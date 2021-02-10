@@ -2,7 +2,8 @@
 <resources>
     <string name="app_name">Anime</string>
     <string name="likes_n">%s me gusta</string>
-    <string name="episode_n">Episodio %s</string>
+    <string name="episode_n">Episodio %d</string>
+    <string name="episode_ns">Episodio %s</string>
     <string name="episodes">Episodios</string>
     <string name="featured">Semanales</string>
     <string name="other_anime">Nuevos OVAs y peliculas</string>
@@ -12,4 +13,11 @@
     <string name="ovas">OVAs</string>
     <string name="ongoing">En Emision</string>
     <string name="finished">Concluida</string>
+    <plurals name="type_episodes">
+        <item quantity="one">%s | %d episodio</item>
+        <item quantity="other">%s | %d episodios</item>
+    </plurals>
+    <string name="no_servers">No hay servidores disponibles</string>
+    <string name="server_error">Ocurrio un error. Intenta de nuevo.</string>
+    <string name="episode_title">%s | Episodio %d</string>
 </resources>

@@ -6,10 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.letrix.anime.data.Anime
+import com.letrix.anime.data.Server
 import com.letrix.anime.network.ApiRepository
 import com.letrix.anime.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,4 +38,25 @@ class InfoViewModel @Inject constructor(
             }
         }
     }
+
+    suspend fun servers(id: String, episode: Int): Resource<List<Server>> {
+        return withContext(IO) {
+            try {
+                return@withContext Resource.success(apiRepository.getServers(id, episode))
+            } catch (e: Exception) {
+                return@withContext Resource.error(data = null, message = e.message ?: "Unknown error")
+            }
+        }
+    }
+
+
+    /*fun servers(id: String, episode: Int) = liveData {
+        emit(
+            try {
+                Resource.success(data = apiRepository.getServers(id, episode))
+            } catch (e: Exception) {
+                Resource.error(data = null, message = e.message ?: "Unknown error")
+            }
+        )
+    }*/
 }

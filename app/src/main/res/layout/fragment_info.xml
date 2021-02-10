@@ -9,7 +9,7 @@
     app:umanoPanelHeight="40dp"
     app:umanoParallaxOffset="100dp"
     app:umanoScrollableView="@id/episodes"
-    app:umanoShadowHeight="1dp">
+    app:umanoShadowHeight="4dp">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/poster"
-                android:layout_width="230dp"
+                android:layout_width="200dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="H,75:106"
@@ -32,7 +32,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/RoundCorner"
-                tools:src="@sample/poster" />
+                tools:src="@sample/poster[1]" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,15 +123,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/drag_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.45"
-        android:background="@color/dark_500"
+        android:animateLayoutChanges="true"
         android:clickable="true"
         android:focusable="false"
-        android:gravity="center|bottom">
+        android:gravity="center|top"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/episodes_header"
@@ -157,14 +158,46 @@
                 app:srcCompat="@drawable/ic_arrow_up" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/episodes"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/episodes_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingVertical="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/episodes_header" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/episodes"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingVertical="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/server_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/servers"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingVertical="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/server_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
