@@ -1,0 +1,3 @@
+include ':flexbox', ':app'
+include ':app'
+rootProject.name = "anime"

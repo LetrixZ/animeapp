@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Anime</string>
+    <string name="likes_n">%s me gusta</string>
+    <string name="episode_n">Episodio %s</string>
+    <string name="episodes">Episodios</string>
+    <string name="featured">Semanales</string>
+    <string name="other_anime">Nuevos OVAs y peliculas</string>
+    <string name="top_anime">Top 10 Anime</string>
+    <string name="latest_added">Nuevas adiciones</string>
+    <string name="movies">Peliculas</string>
+    <string name="ovas">OVAs</string>
+    <string name="ongoing">En Emision</string>
+    <string name="finished">Concluida</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RoundHalfCorner">
+        <item name="cornerSizeTopRight">3dp</item>
+        <item name="cornerSizeTopLeft">3dp</item>
+    </style>
+
+    <style name="RoundCorner">
+        <item name="cornerSize">3dp</item>
+    </style>
+</resources>
