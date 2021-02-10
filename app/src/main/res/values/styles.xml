@@ -9,4 +9,15 @@
     <style name="RoundCorner">
         <item name="cornerSize">3dp</item>
     </style>
+
+    <style name="ButtonStyle">
+        <item name="android:tint">?colorOnSurface</item>
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
 </resources>

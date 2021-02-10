@@ -2,6 +2,7 @@ package com.letrix.anime.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -9,13 +10,12 @@ import androidx.navigation.fragment.findNavController
 import com.letrix.anime.R
 import com.letrix.anime.data.Anime
 import com.letrix.anime.databinding.FragmentHomeBinding
-import com.letrix.anime.ui.AnimeAdapter
+import com.letrix.anime.ui.info.ServerBottomSheet
 import com.letrix.anime.utils.Status
-import com.letrix.anime.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickListener {
+class HomeFragment : Fragment(R.layout.fragment_home), HomeController.ItemClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModels<HomeViewModel>()
@@ -29,6 +29,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickLis
         controller?.onRestoreInstanceState(viewModel.bundle)
 
         setupObserver()
+
+        binding.search.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToSearchFragment())
+        }
     }
 
 
@@ -65,8 +69,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickLis
         controller?.onSaveInstanceState(viewModel.bundle!!)
     }
 
-    override fun onClick(item: Anime) {
+    override fun onAnime(item: Anime) {
         findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToInfoFragment(item.id))
+    }
+
+    override fun onEpisode(item: Anime, episode: Int) {
+        ServerBottomSheet().also {
+            it.arguments = bundleOf("anime" to item, "episode" to episode)
+            it.show(childFragmentManager, null)
+        }
     }
 
 }

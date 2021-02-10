@@ -1,6 +1,5 @@
 package com.letrix.anime.ui.epoxy
 
-import android.net.Uri
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +23,7 @@ abstract class AnimeModel : EpoxyModelWithHolder<AnimeModel.Holder>() {
     var extra: String? = ""
 
     @EpoxyAttribute
-    lateinit var poster: Uri
+    lateinit var poster: String
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     lateinit var clickListener: View.OnClickListener

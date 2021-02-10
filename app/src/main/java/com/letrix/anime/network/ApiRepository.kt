@@ -1,5 +1,8 @@
 package com.letrix.anime.network
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
 import com.letrix.anime.data.Anime
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,6 +17,16 @@ class ApiRepository @Inject constructor(
     suspend fun getServers(id: String, episode: Int) = apiService.getServers(id, episode)
 
     suspend fun getGenre(genre: String) = apiService.getGenre(genre)
+
+    fun searchAnime(query: String) = Pager(
+        config = PagingConfig(
+            pageSize = 10,
+            maxSize = 60,
+            initialLoadSize = 20,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = { SearchDataSource(query, apiService) }
+    ).liveData
 
     suspend fun getHome(): List<Anime.List> {
         return apiService.getHomeList()

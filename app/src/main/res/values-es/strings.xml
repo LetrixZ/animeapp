@@ -20,4 +20,7 @@
     <string name="no_servers">No hay servidores disponibles</string>
     <string name="server_error">Ocurrio un error. Intenta de nuevo.</string>
     <string name="episode_title">%s | Episodio %d</string>
+    <string name="error_loading">No se han podido cargar los resultados</string>
+    <string name="retry">Reintentar</string>
+    <string name="search">Buscar…</string>
 </resources>

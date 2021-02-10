@@ -12,7 +12,7 @@ object ImageLoader {
         Glide.with(target).load(poster).transition(withCrossFade()).into(target)
     }
 
-    fun loadImage(poster: Uri, target: ImageView) {
+    fun loadImage(poster: String, target: ImageView) {
         Glide.with(target).load(poster).transition(withCrossFade()).into(target)
     }
 

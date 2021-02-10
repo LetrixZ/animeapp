@@ -7,14 +7,13 @@ import com.airbnb.epoxy.TypedEpoxyController
 import com.airbnb.epoxy.carousel
 import com.letrix.anime.R
 import com.letrix.anime.data.Anime
-import com.letrix.anime.ui.AnimeAdapter
 import com.letrix.anime.ui.epoxy.AnimeModel_
 import com.letrix.anime.ui.epoxy.header
 import com.letrix.anime.utils.Util
 import kotlin.math.ln
 import kotlin.math.pow
 
-class HomeController(private val context: Context, private val clickListener: AnimeAdapter.ItemClickListener) :
+class HomeController(private val context: Context, private val clickListener: ItemClickListener) :
     TypedEpoxyController<List<Anime.List>>() {
 
     override fun buildModels(data: List<Anime.List>?) {
@@ -33,32 +32,32 @@ class HomeController(private val context: Context, private val clickListener: An
                             .id(anime.id)
                             .title(anime.title)
                             .extra(context.getString(R.string.episode_n, anime.latestEpisode))
-                            .poster(Uri.parse(anime.poster))
+                            .poster(anime.poster)
                             .clickListener { _ ->
-                                clickListener.onClick(anime)
+                                clickListener.onEpisode(anime, anime.latestEpisode!!)
                             }
                         1 -> AnimeModel_()
                             .id(anime.id)
                             .title(anime.title)
                             .extra(context.getString(R.string.episode_n, anime.latestEpisode))
-                            .poster(Uri.parse(anime.poster))
+                            .poster(anime.poster)
                             .clickListener { _ ->
-                                clickListener.onClick(anime)
+                                clickListener.onEpisode(anime, anime.latestEpisode!!)
                             }
                         2 -> AnimeModel_()
                             .id(anime.id)
                             .title(anime.title)
                             .extra(context.getString(R.string.likes_n, getFormattedNumber(anime.likes!!)))
-                            .poster(Uri.parse(anime.poster))
+                            .poster(anime.poster)
                             .clickListener { _ ->
-                                clickListener.onClick(anime)
+                                clickListener.onAnime(anime)
                             }
                         else -> AnimeModel_()
                             .id(anime.id)
                             .title(anime.title)
-                            .poster(Uri.parse(anime.poster))
+                            .poster(anime.poster)
                             .clickListener { _ ->
-                                clickListener.onClick(anime)
+                                clickListener.onAnime(anime)
                             }
                     }
                 })
@@ -73,5 +72,9 @@ class HomeController(private val context: Context, private val clickListener: An
         return String.format("%.1f %c", count / 1000.0.pow(exp.toDouble()), "kMGTPE"[exp - 1]).replace(",", ".")
     }
 
+    interface ItemClickListener {
+        fun onAnime(item: Anime)
+        fun onEpisode(item: Anime, episode: Int)
+    }
 
 }
