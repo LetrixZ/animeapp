@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Base64
 import com.letrix.anime.R
 import java.nio.charset.StandardCharsets
+import kotlin.math.ln
+import kotlin.math.pow
 
 object Util {
 
@@ -34,5 +36,13 @@ object Util {
             else -> "Default"
         }
     }
+
+    fun getLikes(count: Int?): String {
+        if (count == null) return ""
+        if (count < 1000) return "" + count
+        val exp = (ln(count.toDouble()) / ln(1000.0)).toInt()
+        return String.format("%.1f %c", count / 1000.0.pow(exp.toDouble()), "kMGTPE"[exp - 1]).replace(",", ".")
+    }
+
 
 }

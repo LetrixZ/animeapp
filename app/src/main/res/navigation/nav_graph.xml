@@ -74,12 +74,12 @@
             android:name="anime"
             app:argType="com.letrix.anime.data.Anime" />
         <argument
-            android:name="episode"
-            app:argType="integer" />
-        <argument
             android:name="selected"
             android:defaultValue="0"
             app:argType="integer" />
+        <argument
+            android:name="episode"
+            app:argType="com.letrix.anime.room.Anime$Episode" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

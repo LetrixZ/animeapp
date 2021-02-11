@@ -1,6 +1,8 @@
 package com.letrix.anime.ui.home
 
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.SparseArray
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,10 +21,11 @@ class HomeViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
+    var container: SparseArray<Parcelable>? = SparseArray()
     private val _home = MutableLiveData<Resource<List<Anime.List>>>()
     val home: LiveData<Resource<List<Anime.List>>> get() = _home
 
-    var bundle: Bundle? = null
+    val bundle = Bundle()
 
     init {
         _home.postValue(Resource.loading(null))

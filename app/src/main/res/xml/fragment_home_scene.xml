@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/epoxy_recycler_view"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/epoxy_recycler_view"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,7 +76,7 @@
         <OnSwipe
             app:dragDirection="dragUp"
             app:moveWhenScrollAtTop="false"
-            app:touchAnchorId="@+id/epoxy_recycler_view"
+            app:touchAnchorId="@+id/recycler_view"
             app:touchAnchorSide="top"
             motion:onTouchUp="stop" />
     </Transition>

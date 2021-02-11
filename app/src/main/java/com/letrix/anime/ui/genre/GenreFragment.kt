@@ -13,8 +13,6 @@ import com.letrix.anime.data.Anime
 import com.letrix.anime.databinding.FragmentGenreBinding
 import com.letrix.anime.ui.AnimeAdapter
 import com.letrix.anime.utils.Status.*
-import com.letrix.anime.ui.genre.GenreFragmentArgs
-import com.letrix.anime.ui.genre.GenreFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber.e
 
@@ -40,7 +38,7 @@ class GenreFragment : Fragment(R.layout.fragment_genre), AnimeAdapter.ItemClickL
     private fun setupRecycler(list: Anime.List) {
         binding.apply {
             genre.text = list.title
-            recyclerView.adapter = AnimeAdapter(this@GenreFragment).also { it.submitList(list.list) }
+            recyclerView.adapter = AnimeAdapter(this@GenreFragment, "genre").also { it.submitList(list.list) }
             recyclerView.layoutManager = FlexboxLayoutManager(context, FlexDirection.ROW, FlexWrap.WRAP).also {
                 it.alignItems = AlignItems.CENTER
                 it.justifyContent = JustifyContent.SPACE_EVENLY
@@ -66,8 +64,11 @@ class GenreFragment : Fragment(R.layout.fragment_genre), AnimeAdapter.ItemClickL
         })
     }
 
-    override fun onClick(item: Anime) {
+    override fun onAnime(item: Anime) {
         findNavController().navigate(GenreFragmentDirections.actionGenreFragmentToInfoFragment(item.id))
+    }
+
+    override fun onEpisode(episode: Int, item: Anime) {
     }
 
 }

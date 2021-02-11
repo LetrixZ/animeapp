@@ -15,12 +15,13 @@
     <string name="finished">Finished</string>
     <string name="no_servers">No servers available</string>
     <string name="server_error">An error occurred. Please retry.</string>
-    <string name="episode_title">%1$s | Episode %1$d</string>
+    <string name="episode_title">%s | Episode %d</string>
     <string name="error_loading">Results could not be loaded</string>
     <string name="retry">Retry</string>
     <string name="search">Search…</string>
     <string name="no_results">No results</string>
     <string name="browse">Browse</string>
+    <string name="continue_watching">Continue Watching</string>
     <plurals name="type_episodes">
         <item quantity="one">%s | %d episode</item>
         <item quantity="other">%s | %d episodes</item>

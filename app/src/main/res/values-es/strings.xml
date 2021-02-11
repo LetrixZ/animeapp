@@ -23,4 +23,6 @@
     <string name="error_loading">No se han podido cargar los resultados</string>
     <string name="retry">Reintentar</string>
     <string name="search">Buscar…</string>
+    <string name="no_results">Sin resultados</string>
+    <string name="browse">Descubre</string>
 </resources>
