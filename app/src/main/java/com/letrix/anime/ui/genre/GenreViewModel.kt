@@ -1,32 +1,20 @@
 package com.letrix.anime.ui.genre
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.letrix.anime.data.Anime
-import com.letrix.anime.network.ApiRepository
-import com.letrix.anime.utils.Resource
+import androidx.lifecycle.*
+import androidx.paging.cachedIn
+import com.letrix.anime.network.JkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GenreViewModel @Inject constructor(private val apiRepository: ApiRepository) : ViewModel() {
-    private val _genre = MutableLiveData<Resource<Anime.List>>()
-    val genre: LiveData<Resource<Anime.List>> get() = _genre
+class GenreViewModel @Inject constructor(private val apiRepository: JkRepository, state: SavedStateHandle) : ViewModel() {
+    private val currentGenre = state.getLiveData<String>("current_query")
 
-    init {
-        _genre.postValue(Resource.loading(null))
+    val results = currentGenre.switchMap { genreString ->
+        apiRepository.getGenre(genreString).cachedIn(viewModelScope)
     }
 
-    fun genre(id: String) {
-        viewModelScope.launch {
-            _genre.value = try {
-                Resource.success(data = apiRepository.getGenre(id))
-            } catch (e: Exception) {
-                Resource.error(data = null, message = e.message ?: "Unknown error")
-            }
-        }
+    fun genre(query: String) {
+        currentGenre.value = query
     }
 }

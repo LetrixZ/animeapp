@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Base64
 import com.letrix.anime.R
 import java.nio.charset.StandardCharsets
+import java.util.*
 import kotlin.math.ln
 import kotlin.math.pow
 
@@ -27,7 +28,7 @@ object Util {
     }
 
     fun parseQuality(item: String): String {
-        return when (item) {
+        return when (item.toLowerCase(Locale.ROOT)) {
             "720p", "default", "hd" -> return "Calidad alta (720p)"
             "480p", "sd" -> return "Calidad media (480p)"
             "low" -> return "Calidad baja (360p)"

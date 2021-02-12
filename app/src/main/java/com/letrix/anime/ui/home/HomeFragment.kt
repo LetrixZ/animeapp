@@ -20,7 +20,6 @@ import com.letrix.anime.ui.home.adapter.ParentAdapter
 import com.letrix.anime.ui.info.ServerBottomSheet
 import com.letrix.anime.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickListener {
@@ -56,7 +55,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickLis
 
             if (it != null) {
                 val trackedList = it.filter { tracked -> !tracked.anime.completed }.map { tracked ->
-                    Timber.d(tracked.toString())
                     val latestEpisode = tracked.episodes.filter { episode -> episode.episode == tracked.anime.latestEpisode }[0]
                     Anime(
                         id = tracked.anime.id,
@@ -133,7 +131,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickLis
     }
 
     override fun onAnime(item: Anime) {
-        findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToInfoFragment(item.id))
+        findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToInfoFragment(item.id, item))
     }
 
     override fun onEpisode(episode: Int, item: Anime) {

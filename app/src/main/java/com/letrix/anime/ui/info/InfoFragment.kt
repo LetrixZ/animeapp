@@ -6,18 +6,24 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.flexbox.*
 import com.letrix.anime.R
 import com.letrix.anime.data.Anime
 import com.letrix.anime.databinding.FragmentInfoBinding
+import com.letrix.anime.ui.genre.GenreViewModel
 import com.letrix.anime.utils.ImageLoader
 import com.letrix.anime.utils.Status.*
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.jsoup.Jsoup
 import timber.log.Timber.*
 
 @ExperimentalStdlibApi
@@ -31,6 +37,8 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
 
     private var episodeLayoutManager: FlexboxLayoutManager? = null
 
+    private val loaded = MutableLiveData(false)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentInfoBinding.bind(view)
@@ -43,6 +51,9 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
 
         viewModel.info(args.id)
         setObservers()
+
+        ImageLoader.loadImage(args.anime.poster, binding.poster)
+
 
     }
 
@@ -75,7 +86,6 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
 
     private fun setupData(data: Anime) {
         binding.apply {
-            ImageLoader.loadImage(data.poster, poster)
             title.text = data.title
             synonyms.text = data.synonyms!!.joinToString("\n")
             synopsis.text = data.synopsis!!
@@ -106,10 +116,13 @@ class InfoFragment : Fragment(R.layout.fragment_info), GenreAdapter.OnItemClickL
                 }
 
             })
+            loaded.value = true
         }
     }
 
     override fun onClick(genre: String) {
+        val genreViewModel by activityViewModels<GenreViewModel>()
+        genreViewModel.genre(genre)
         findNavController().navigate(InfoFragmentDirections.actionInfoFragmentToGenreFragment(genre.replace(" ", "-")))
     }
 

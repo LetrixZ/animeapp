@@ -11,7 +11,11 @@ class RestConfig {
         const val JKANIME_SERVER = "show"
         const val JKANIME_GENRE = "genres"
         const val JKANIME_SEARCH = "search"
+
         const val FEMBED_API = "${JKANIME_API}stream/fembed"
+        const val STAPE_API = "${JKANIME_API}stream/stape"
         const val OKRU_API = "${JKANIME_API}stream/okru"
+
+        const val FLV_API = "http://192.168.1.40:5000/api/v1/"
     }
 }

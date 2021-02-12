@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.letrix.anime.data.Anime
 import com.letrix.anime.data.Server
-import com.letrix.anime.network.ApiRepository
+import com.letrix.anime.network.JkRepository
 import com.letrix.anime.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InfoViewModel @Inject constructor(
-    private val apiRepository: ApiRepository
+    private val apiRepository: JkRepository
 ) : ViewModel() {
 
     val bundle = Bundle()

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface ApiService {
+interface JkService {
 
     @GET(RestConfig.JKANIME_HOME)
     suspend fun getHomeList(): List<Anime.List>

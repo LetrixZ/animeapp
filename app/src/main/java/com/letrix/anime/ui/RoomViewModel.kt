@@ -19,12 +19,6 @@ class RoomViewModel
 
     val list: LiveData<List<Anime.WithEpisodes>> = repository.all()
 
-    fun upsert(anime: Anime) {
-        viewModelScope.launch {
-            d("Anime ${anime.id} inserted?: ${repository.upsert(anime)}")
-        }
-    }
-
     fun getEpisode(episodeId: String) = liveData { emit(repository.getEpisode(episodeId)) }
 
     fun upsert(episode: Anime.Episode, anime: Anime) {
@@ -43,7 +37,7 @@ class RoomViewModel
         }
     }
 
-    fun checkCompleted() = viewModelScope.launch {
+    private fun checkCompleted() = viewModelScope.launch {
         list.value?.forEach {
             val anime = it.anime
             val episodes = it.episodes.filter { episode -> episode.completed() }

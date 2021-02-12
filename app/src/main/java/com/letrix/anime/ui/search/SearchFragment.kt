@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,8 +37,8 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchPagingAdapter.I
             recyclerView.setHasFixedSize(true)
             recyclerView.itemAnimator = null
             recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
-                header = SearchLoadStateAdapter { adapter.retry() },
-                footer = SearchLoadStateAdapter { adapter.retry() }
+                header = LoadStateAdapter { adapter.retry() },
+                footer = LoadStateAdapter { adapter.retry() }
             )
             retryButton.setOnClickListener { adapter.retry() }
         }
@@ -92,6 +91,6 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchPagingAdapter.I
     }
 
     override fun onClick(item: Anime) {
-        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToInfoFragment(item.id))
+        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToInfoFragment(item.id, item))
     }
 }

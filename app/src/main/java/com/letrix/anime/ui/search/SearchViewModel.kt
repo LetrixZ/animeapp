@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.letrix.anime.network.ApiRepository
+import com.letrix.anime.network.JkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -13,11 +13,11 @@ import javax.inject.Inject
 class SearchViewModel
 @Inject
 constructor(
-    private val repository: ApiRepository,
+    private val repository: JkRepository,
     state: SavedStateHandle
 ) : ViewModel() {
 
-    val currentQuery = state.getLiveData<String>("current_query")
+    private val currentQuery = state.getLiveData<String>("current_query")
 
     val results = currentQuery.switchMap { queryString ->
         repository.searchAnime(queryString).cachedIn(viewModelScope)

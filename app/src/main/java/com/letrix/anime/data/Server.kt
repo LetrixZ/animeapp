@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Server(
-    val name: String,
+    var name: String,
     val mirrors: List<Mirror>
 ) : Parcelable {
     var index: Int = 0

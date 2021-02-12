@@ -1,7 +1,7 @@
 package com.letrix.anime.di
 
 import com.google.gson.GsonBuilder
-import com.letrix.anime.network.ApiService
+import com.letrix.anime.network.JkService
 import com.letrix.anime.network.RestConfig
 import dagger.Module
 import dagger.Provides
@@ -20,7 +20,7 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideApiService(): ApiService {
+    fun provideJkService(): JkService {
         val client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
@@ -30,7 +30,7 @@ object RetrofitModule {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
-            .create(ApiService::class.java)
+            .create(JkService::class.java)
     }
 
 }

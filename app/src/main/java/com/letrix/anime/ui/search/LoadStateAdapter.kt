@@ -8,8 +8,8 @@ import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.letrix.anime.databinding.FooterLoadStateBinding
 
-class SearchLoadStateAdapter(private val retry: () -> Unit) :
-    LoadStateAdapter<SearchLoadStateAdapter.LoadStateViewHolder>() {
+class LoadStateAdapter(private val retry: () -> Unit) :
+    LoadStateAdapter<com.letrix.anime.ui.search.LoadStateAdapter.LoadStateViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadStateViewHolder {
         val binding = FooterLoadStateBinding.inflate(

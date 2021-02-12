@@ -19,6 +19,8 @@ data class Anime(
     @SerializedName("episode") val latestEpisode: Int? = 1,
 ) : Parcelable {
 
+    var flvId: String = ""
+
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
