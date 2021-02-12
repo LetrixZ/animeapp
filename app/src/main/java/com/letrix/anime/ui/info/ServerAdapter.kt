@@ -89,8 +89,8 @@ class ServerAdapter(private val serverClickListener: ServerClickListener) :
         ) :
             RecyclerView.ViewHolder(binding.root) {
             fun bind(mirror: Server.Mirror) {
-                binding.root.text = Util.parseQuality(mirror.quality)
-                binding.root.setOnClickListener {
+                binding.text.text = Util.parseQuality(mirror.quality)
+                binding.clickableLayout.setOnClickListener {
                     clickListener.onItemClick(layoutPosition)
                 }
             }

@@ -55,7 +55,6 @@
                 android:id="@+id/extra"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:textAlignment="center"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp"

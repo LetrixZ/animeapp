@@ -20,6 +20,7 @@ import com.letrix.anime.ui.home.adapter.ParentAdapter
 import com.letrix.anime.ui.info.ServerBottomSheet
 import com.letrix.anime.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber.d
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickListener {
@@ -55,15 +56,18 @@ class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickLis
 
             if (it != null) {
                 val trackedList = it.filter { tracked -> !tracked.anime.completed }.map { tracked ->
-                    val latestEpisode = tracked.episodes.filter { episode -> episode.episode == tracked.anime.latestEpisode }[0]
+                    val latestEpisode = tracked.episodes.filter { episode -> episode.episode == tracked.anime.latestEpisode }.get(0)
                     Anime(
                         id = tracked.anime.id,
                         title = tracked.anime.title,
                         poster = tracked.anime.poster,
                         totalEpisodes = tracked.anime.totalEpisodes,
                         ongoing = tracked.anime.ongoing,
-                        latestEpisode = if (latestEpisode.completed() && latestEpisode.episode < tracked.anime.totalEpisodes) tracked.anime.latestEpisode + 1 else tracked.anime.latestEpisode
-                    )
+                        latestEpisode = tracked.anime.latestEpisode/*if (latestEpisode.completed()) tracked.anime.latestEpisode + 1 else tracked.anime.latestEpisode*/
+                    ).also { anime ->
+                        anime.watched = tracked.episodes.map { episode -> episode.episode }
+                        anime.nextEpisode = if (latestEpisode.completed()) tracked.anime.latestEpisode + 1 else tracked.anime.latestEpisode
+                    }
                 }
                 if (trackedList.isNotEmpty()) {
                     concatAdapter.addAdapter(

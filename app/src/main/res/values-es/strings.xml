@@ -25,4 +25,6 @@
     <string name="search">Buscar…</string>
     <string name="no_results">Sin resultados</string>
     <string name="browse">Descubre</string>
+    <string name="continue_watching">Sigue mirando</string>
+    <string name="next_episode">Episodio %d proximamente</string>
 </resources>

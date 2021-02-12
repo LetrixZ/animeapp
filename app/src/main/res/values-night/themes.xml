@@ -19,5 +19,7 @@
         <item name="colorAccent">@color/red_500</item>
 
         <item name="editTextColor">#1E1E1E</item>
+        <item name="chipBackground">#1EFFFFFF</item>
+        <item name="progressBackground">#505050</item>
     </style>
 </resources>

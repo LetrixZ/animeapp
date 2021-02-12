@@ -4,15 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.letrix.anime.databinding.ItemChipBinding
+import com.letrix.anime.room.Anime
+import com.letrix.anime.utils.Util
 
-class EpisodeAdapter(private val list: List<String>, private val clickListener: OnItemClick) :
+class EpisodeAdapter(private val list: List<String>, private val watched: Map<Int, Anime.Episode>?, private val clickListener: OnItemClick) :
     RecyclerView.Adapter<EpisodeAdapter.ItemHolder>() {
     inner class ItemHolder(private val binding: ItemChipBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(episode: String) {
-            binding.root.text = episode
-            binding.root.isCheckable = false
-            binding.root.setOnClickListener {
+            binding.text.text = episode
+            binding.text.background.level = Util.getProgress(watched?.get(layoutPosition + 1))
+            binding.clickableLayout.setOnClickListener {
                 clickListener.onEpisode(layoutPosition + 1)
+            }
+            binding.clickableLayout.setOnLongClickListener {
+                clickListener.onEpisodeLong(layoutPosition + 1)
+                true
             }
         }
     }
@@ -28,5 +34,6 @@ class EpisodeAdapter(private val list: List<String>, private val clickListener: 
 
     interface OnItemClick {
         fun onEpisode(episode: Int)
+        fun onEpisodeLong(episode: Int)
     }
 }

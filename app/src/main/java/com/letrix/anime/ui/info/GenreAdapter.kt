@@ -9,9 +9,8 @@ class GenreAdapter(private val list: List<String>, private val clickListener: On
     RecyclerView.Adapter<GenreAdapter.ItemHolder>() {
     inner class ItemHolder(private val binding: ItemChipBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(genre: String) {
-            binding.root.text = genre
-            binding.root.isCheckable = false
-            binding.root.setOnClickListener {
+            binding.text.text = genre
+            binding.clickableLayout.setOnClickListener {
                 clickListener.onClick(genre)
             }
         }

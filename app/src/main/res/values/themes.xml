@@ -1,4 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <attr name="chipBackground" format="color"/>
+    <attr name="progressBackground" format="color"/>
+
     <!-- Base application theme. -->
     <style name="Theme.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -19,5 +23,7 @@
         <item name="colorAccent">@color/red_500</item>
 
         <item name="editTextColor">#EAEAEB</item>
+        <item name="chipBackground">#1A000000</item>
+        <item name="progressBackground">#E1E1E1</item>
     </style>
 </resources>

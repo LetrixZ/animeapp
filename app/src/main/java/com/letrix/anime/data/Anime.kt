@@ -9,6 +9,7 @@ data class Anime(
     val title: String,
     val synonyms: kotlin.collections.List<String>? = emptyList(),
     @SerializedName("cover") val poster: String,
+    @SerializedName("thumbnail") val thumbnail: String? = "",
     val type: String? = "Serie",
     val duration: Int? = 0,
     val genres: kotlin.collections.List<String>? = emptyList(),
@@ -20,21 +21,40 @@ data class Anime(
 ) : Parcelable {
 
     var flvId: String = ""
+    var watched = emptyList<Int>()
+    var nextEpisode: Int = 0
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.createStringArrayList(),
         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(
+            Int::
+            class.java.classLoader
+        ) as? Int,
         parcel.createStringArrayList(),
-        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(
+            Boolean::
+            class.java.classLoader
+        ) as? Boolean,
+        parcel.readValue(
+            Int::
+            class.java.classLoader
+        ) as? Int,
         parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int
+        parcel.readValue(
+            Int::
+            class.java.classLoader
+        ) as? Int,
+        parcel.readValue(
+            Int::
+            class.java.classLoader
+        ) as? Int
     ) {
+        flvId = parcel.readString()!!
     }
 
     data class List(
@@ -47,6 +67,7 @@ data class Anime(
         parcel.writeString(title)
         parcel.writeStringList(synonyms)
         parcel.writeString(poster)
+        parcel.writeString(thumbnail)
         parcel.writeString(type)
         parcel.writeValue(duration)
         parcel.writeStringList(genres)
@@ -55,6 +76,7 @@ data class Anime(
         parcel.writeString(synopsis)
         parcel.writeValue(likes)
         parcel.writeValue(latestEpisode)
+        parcel.writeString(flvId)
     }
 
     override fun describeContents(): Int {

@@ -10,6 +10,9 @@ import com.letrix.anime.data.Anime
 import com.letrix.anime.data.Server
 import com.letrix.anime.ui.RoomViewModel
 import com.letrix.anime.ui.info.ServerBottomSheet
+import com.letrix.anime.utils.Util.hideSystemUI
+import com.letrix.anime.utils.Util.showBelowCutout
+import com.letrix.anime.utils.Util.showSystemUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity(), ServerBottomSheet.ItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        showBelowCutout()
     }
 
     override fun onItemClick(serverList: List<Server>, server: Int, anime: Anime, episode: Int) {
@@ -38,5 +42,11 @@ class MainActivity : AppCompatActivity(), ServerBottomSheet.ItemClickListener {
                 bundleOf("servers" to serverList.toTypedArray(), "selected" to server, "anime" to anime, "episode" to episodeDb)
             )
         })
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        /*if (hasFocus && findNavController(R.id.nav_host_fragment).currentDestination?.label == "PlayerFragment") hideSystemUI()
+        else showSystemUI()*/
     }
 }

@@ -29,7 +29,8 @@ class AnimeAdapter(private val itemClickListener: ItemClickListener, private val
         fun onBind(item: Anime) {
             binding.apply {
                 title.text = item.title
-                ImageLoader.loadImage(item.poster, poster)
+                if (this@AnimeAdapter.title == "featured") ImageLoader.loadImage(item.thumbnail!!, poster)
+                else ImageLoader.loadImage(item.poster, poster)
             }
             when (title) {
                 "top" -> {
@@ -39,7 +40,9 @@ class AnimeAdapter(private val itemClickListener: ItemClickListener, private val
                 }
                 "tracked" -> {
                     binding.extra.isVisible = true
-                    binding.extra.text = itemView.context.getString(R.string.episode_n, item.latestEpisode)
+                    if (item.totalEpisodes == item.watched.size && item.latestEpisode == item.totalEpisodes) {
+                        binding.extra.text = itemView.context.getString(R.string.next_episode, item.nextEpisode)
+                    } else binding.extra.text = itemView.context.getString(R.string.episode_n, item.latestEpisode)
                     binding.clickableLayout.setOnClickListener { itemClickListener.onAnime(item) }
                 }
                 "featured", "other" -> {

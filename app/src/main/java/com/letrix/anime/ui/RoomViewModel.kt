@@ -19,6 +19,13 @@ class RoomViewModel
 
     val list: LiveData<List<Anime.WithEpisodes>> = repository.all()
 
+    fun get(id: String) = liveData {
+        /*val tmp = list.value?.filter { it.anime.id == id }
+        if (tmp?.isNotEmpty() == true) emit(tmp[0].episodes)
+        else emit(null)*/
+        emit(repository.get(id))
+    }
+
     fun getEpisode(episodeId: String) = liveData { emit(repository.getEpisode(episodeId)) }
 
     fun upsert(episode: Anime.Episode, anime: Anime) {
@@ -27,23 +34,27 @@ class RoomViewModel
             if (item != null) {
                 repository.upsert(anime)
                 d("Episode ${episode.id} inserted?: ${repository.upsert(episode)}")
+                checkCompleted(anime)
             } else {
                 d("Anime ${anime.id} not in database.")
                 repository.insert(anime)
                 repository.insert(episode)
                 d("Anime ${anime.id} inserted, and episode ${episode.id} inserted")
+                checkCompleted(anime)
             }
-            checkCompleted()
         }
     }
 
-    private fun checkCompleted() = viewModelScope.launch {
-        list.value?.forEach {
-            val anime = it.anime
-            val episodes = it.episodes.filter { episode -> episode.completed() }
-            val completed = !anime.ongoing && episodes.size == anime.totalEpisodes
-            d("anime: $anime, episodes: $episodes, completed? $completed, ongoing: ${!anime.ongoing}, ${episodes.size} and ${anime.totalEpisodes}")
-            d(repository.setCompleted(anime.id, completed).toString())
+    private fun checkCompleted(item: Anime) = viewModelScope.launch {
+        val it = repository.get(item.id)
+        if (it != null) {
+            if (it.anime.id == item.id) {
+                val anime = it.anime
+                val episodes = it.episodes.filter { episode -> episode.completed() }
+                val completed = !anime.ongoing && episodes.size == anime.totalEpisodes
+                d("anime: $anime, episodes: $episodes, completed? $completed, ongoing: ${!anime.ongoing}, ${episodes.size} and ${anime.totalEpisodes}")
+                d(repository.setCompleted(anime.id, completed).toString())
+            }
         }
     }
 

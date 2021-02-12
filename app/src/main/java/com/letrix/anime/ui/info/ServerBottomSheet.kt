@@ -116,7 +116,7 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
         lifecycleScope.launch {
             getFlv()
             binding.progressBar.isVisible = true
-            val list: List<Server>? = getServers()?.map { // is a shorter way to write IntRange(0, 10)
+            var list: List<Server>? = getServers()?.map { // is a shorter way to write IntRange(0, 10)
                 async { // async means "concurrently", context goes here
                     when (it.name) {
                         "Okru" -> getOkru(it.mirrors[0].url)
@@ -125,7 +125,7 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
                     }
                 }
             }?.awaitAll()?.filterNotNull()
-            list?.filter { server -> server.name != "MEGA" && server.name != "YourUpload" && server.name != "Netu" && server.name != "Maru" && server.name != "Mega" }
+            list = list?.filter { server -> server.name != "MEGA" && server.name != "YourUpload" && server.name != "Netu" && server.name != "Maru" && server.name != "Mega" }
             list?.forEach { it.name = it.name + " (jkAnime)" }
             if (list != null) {
                 serverList.addAll(list)
@@ -195,7 +195,7 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
             while (count < maxTries) {
                 try {
                     val sourceResponse = Jsoup.connect(url)
-                        .timeout(1000)
+                        .timeout(10000)
                         /*.userAgent("Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19")*/
                         .ignoreContentType(true)
                         .get().body()

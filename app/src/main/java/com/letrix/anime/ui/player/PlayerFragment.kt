@@ -4,12 +4,9 @@ import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
-import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,6 +20,8 @@ import com.letrix.anime.data.Anime
 import com.letrix.anime.data.Server
 import com.letrix.anime.databinding.FragmentPlayerBinding
 import com.letrix.anime.ui.RoomViewModel
+import com.letrix.anime.utils.Util.hideSystemUI
+import com.letrix.anime.utils.Util.showSystemUI
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import com.letrix.anime.room.Anime as AnimeRoom
@@ -40,10 +39,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
-        view.doOnLayout {
-            view.windowInsetsController?.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
-            view.windowInsetsController?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
+
+        activity?.hideSystemUI()
 
         binding = FragmentPlayerBinding.bind(view)
         binding.aspectRatioLayout.setAspectRatio(16f / 9f)
@@ -74,6 +71,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     }
 
     private fun initPlayer(server: Server) {
+        activity?.hideSystemUI()
         val audioAttributes =
             AudioAttributes.Builder().setContentType(C.CONTENT_TYPE_MOVIE)
                 .setUsage(C.USAGE_MEDIA)
@@ -138,10 +136,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
         player?.release()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER
-        view?.doOnLayout {
-            view?.windowInsetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
-            view?.windowInsetsController?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_TOUCH
-        }
+        activity?.showSystemUI()
     }
 
 }
