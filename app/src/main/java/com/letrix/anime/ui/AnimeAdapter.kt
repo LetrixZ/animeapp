@@ -11,7 +11,7 @@ import com.letrix.anime.R
 import com.letrix.anime.data.Anime
 import com.letrix.anime.databinding.ItemAnimeBinding
 import com.letrix.anime.utils.ImageLoader
-import com.letrix.anime.utils.Util
+import timber.log.Timber.d
 
 class AnimeAdapter(private val itemClickListener: ItemClickListener, private val title: String) :
     ListAdapter<Anime, AnimeAdapter.ItemHolder>(object : DiffUtil.ItemCallback<Anime>() {
@@ -29,23 +29,19 @@ class AnimeAdapter(private val itemClickListener: ItemClickListener, private val
         fun onBind(item: Anime) {
             binding.apply {
                 title.text = item.title
-                if (this@AnimeAdapter.title == "featured") ImageLoader.loadImage(item.thumbnail!!, poster)
+                if (this@AnimeAdapter.title == "latest_episodes") ImageLoader.loadImage(item.thumbnail!!, poster)
                 else ImageLoader.loadImage(item.poster, poster)
             }
             when (title) {
-                "top" -> {
-                    binding.extra.isVisible = true
-                    binding.extra.text = itemView.context.getString(R.string.likes_n, Util.getLikes(item.likes))
-                    binding.clickableLayout.setOnClickListener { itemClickListener.onAnime(item) }
-                }
                 "tracked" -> {
+                    d("${item.title} ${item.nextEpisode}")
                     binding.extra.isVisible = true
-                    if (item.totalEpisodes == item.watched.size && item.latestEpisode == item.totalEpisodes) {
+                    if (item.totalEpisodes == item.watched.size && item.latestEpisode == item.totalEpisodes && item.state == 1) {
                         binding.extra.text = itemView.context.getString(R.string.next_episode, item.nextEpisode)
-                    } else binding.extra.text = itemView.context.getString(R.string.episode_n, item.latestEpisode)
+                    } else binding.extra.text = itemView.context.getString(R.string.episode_n, item.nextEpisode)
                     binding.clickableLayout.setOnClickListener { itemClickListener.onAnime(item) }
                 }
-                "featured", "other" -> {
+                "latest_episodes" -> {
                     binding.extra.isVisible = true
                     binding.extra.text = itemView.context.getString(R.string.episode_n, item.latestEpisode)
                     binding.clickableLayout.setOnClickListener { itemClickListener.onEpisode(item.latestEpisode!!, item) }
@@ -64,7 +60,7 @@ class AnimeAdapter(private val itemClickListener: ItemClickListener, private val
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val layout = when (title) {
-            "featured" -> R.layout.item_anime_episode_thumbnail
+            "latest_episodes" -> R.layout.item_anime_episode_thumbnail
             else -> R.layout.item_anime
         }
         return ItemHolder(LayoutInflater.from(parent.context).inflate(layout, parent, false))

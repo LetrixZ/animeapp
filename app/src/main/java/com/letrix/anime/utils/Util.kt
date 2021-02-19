@@ -2,6 +2,8 @@ package com.letrix.anime.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Rect
 import android.os.Build
 import android.util.Base64
 import android.view.View
@@ -9,7 +11,6 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import com.letrix.anime.R
-import com.letrix.anime.room.Anime
 import java.nio.charset.StandardCharsets
 import java.util.*
 import kotlin.math.ln
@@ -17,12 +18,33 @@ import kotlin.math.pow
 
 object Util {
 
-    fun getProgress(episode: Anime.Episode?): Int {
+    fun dpToPx(dp: Int): Int {
+        return ((dp * Resources.getSystem().displayMetrics.density).toInt());
+    }
+
+    fun pxToDp(px: Int, context: Context): Int {
+        return ((px / Resources.getSystem().displayMetrics.density).toInt());
+    }
+
+    /*fun getProgress(episode: Anime.Episode?): Int {
         return if (episode != null) {
             if (episode.completed()) 10000
             else if ((episode.progress * 100 / episode.duration) <= 5) 1000
             else (episode.progress * 10000 / episode.duration).toInt()
         } else 0
+    }*/
+
+    fun isVisible(view: View?): Boolean {
+        if (view == null) {
+            return false
+        }
+        if (!view.isShown) {
+            return false
+        }
+        val actualPosition = Rect()
+        view.getGlobalVisibleRect(actualPosition)
+        val screen = Rect(0, 0, Resources.getSystem().displayMetrics.widthPixels, Resources.getSystem().displayMetrics.heightPixels)
+        return actualPosition.intersect(screen)
     }
 
 
@@ -34,7 +56,7 @@ object Util {
     fun getTitle(title: String, context: Context): String {
         return when (title) {
             "featured" -> context.getString(R.string.featured)
-            "other" -> context.getString(R.string.other_anime)
+            "other" -> context.getString(R.string.latest_series)
             "top" -> context.getString(R.string.top_anime)
             "latest" -> context.getString(R.string.latest_added)
             "movies" -> context.getString(R.string.movies)
@@ -45,9 +67,9 @@ object Util {
 
     fun parseQuality(item: String): String {
         return when (item.toLowerCase(Locale.ROOT)) {
-            "720p", "default", "hd" -> return "Calidad alta (720p)"
+            "720p", "default", "hd", "normal" -> return "Calidad alta (720p)"
             "480p", "sd" -> return "Calidad media (480p)"
-            "low" -> return "Calidad baja (360p)"
+            "low", "360p" -> return "Calidad baja (360p)"
             "lowest" -> return "Calidad muy baja (240p)"
             "mobile" -> return "No te molestes (144p)"
             else -> "Default"
@@ -94,19 +116,15 @@ object Util {
             // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
             // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility = (
-                    // Do not let system steal touches for showing the navigation bar
-                    View.SYSTEM_UI_FLAG_IMMERSIVE
-                            // Hide the nav bar and status bar
-                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_FULLSCREEN
-                            // Keep the app content behind the bars even if user swipes them up
-                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
-            // make navbar translucent - do this already in hideSystemUI() so that the bar
-            // is translucent if user swipes it up
-            @Suppress("DEPRECATION")
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+                    // Set the content to appear under the system bars so that the
+                    // content doesn't resize when the system bars hide and show.
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    // Hide the nav bar and status bar
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN)
         }
     }
 
@@ -126,9 +144,9 @@ object Util {
             // Shows the system bars by removing all the flags
             // except for the ones that make the content appear under the system bars.
             @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility = (
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    /*or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION*/
+                    /*or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN*/)
         }
     }
 

@@ -2,10 +2,11 @@ package com.letrix.anime.network
 
 class RestConfig {
     companion object {
-        const val DEBUG = true
+        const val MIRANIME_API = "http://192.168.1.40:4000/api/v1/"
+        const val JIKAN_API = "https://api.jikan.moe/"
 
-//        const val JKANIME_API = "http://192.168.1.40:4000/api/android/"
-        const val JKANIME_API = "https://jkanime-api.vercel.app/api/android/"
+        const val JKANIME_API = "http://192.168.1.40:4000/api/android/"
+//        const val JKANIME_API = "https://jkanime-api.vercel.app/api/android/"
         const val JKANIME_HOME = "home"
         const val JKANIME_INFO = "show"
         const val JKANIME_SERVER = "show"
@@ -14,8 +15,8 @@ class RestConfig {
 
         const val FEMBED_API = "${JKANIME_API}stream/fembed"
         const val STAPE_API = "${JKANIME_API}stream/stape"
+        const val YUPLOAD_APU = "${JKANIME_API}stream/yourupload"
+        const val MARU_API = "${JKANIME_API}stream/mailru"
         const val OKRU_API = "${JKANIME_API}stream/okru"
-
-        const val FLV_API = "http://192.168.1.40:5000/api/v1/"
     }
 }

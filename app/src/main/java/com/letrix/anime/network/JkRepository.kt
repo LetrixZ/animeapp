@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingConfig.Companion.MAX_SIZE_UNBOUNDED
 import androidx.paging.liveData
 import com.letrix.anime.data.Anime
+import com.letrix.anime.network.paging.GenreDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,16 +18,16 @@ class JkRepository @Inject constructor(
 
     suspend fun getServers(id: String, episode: Int) = apiService.getServers(id, episode)
 
-    fun getGenre(genre: String) = Pager(
+    /*fun getGenre(genre: String) = Pager(
         config = PagingConfig(
             pageSize = 20,
             maxSize = MAX_SIZE_UNBOUNDED,
             enablePlaceholders = false
         ),
         pagingSourceFactory = { GenreDataSource(genre, apiService) }
-    ).liveData
+    ).liveData*/
 
-    fun searchAnime(query: String) = Pager(
+    /*fun searchAnime(query: String) = Pager(
         config = PagingConfig(
             pageSize = 10,
             maxSize = 60,
@@ -34,7 +35,7 @@ class JkRepository @Inject constructor(
             enablePlaceholders = false
         ),
         pagingSourceFactory = { SearchDataSource(query, apiService) }
-    ).liveData
+    ).liveData*/
 
     suspend fun getHome(): List<Anime.List> {
         return apiService.getHomeList()

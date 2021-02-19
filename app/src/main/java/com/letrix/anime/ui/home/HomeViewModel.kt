@@ -8,18 +8,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.letrix.anime.data.Anime
-import com.letrix.anime.network.JkRepository
-import com.letrix.anime.network.NetworkHelper
+import com.letrix.anime.network.miranime.MiranimeRepository
+import com.letrix.anime.utils.NetworkHelper
 import com.letrix.anime.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val apiRepository: JkRepository,
-    private val networkHelper: NetworkHelper
+    private val miranimeRepository: MiranimeRepository,
+    networkHelper: NetworkHelper
 ) : ViewModel() {
     var container: SparseArray<Parcelable>? = SparseArray()
     private val _home = MutableLiveData<Resource<List<Anime.List>>>()
@@ -45,7 +44,7 @@ class HomeViewModel @Inject constructor(
     private fun fetchHome() {
         viewModelScope.launch {
             _home.value = try {
-                Resource.success(data = apiRepository.getHome())
+                Resource.success(data = miranimeRepository.getHome())
             } catch (exception: Exception) {
                 Resource.error(
                     data = null,
@@ -56,14 +55,9 @@ class HomeViewModel @Inject constructor(
     }
 
     companion object {
-        private val TAG = "MYLOG MainVM"
         const val internetErr = "Network is down.\n" +
                 "Please check\n" +
                 "your INTERNET connection!"
         const val otherErr = "Error Occurred!"
-
-        fun lgd(s: String) = Timber.d(s)
-        fun lge(s: String) = Timber.e(s)
-        fun lgi(s: String) = Timber.i(s)
     }
 }

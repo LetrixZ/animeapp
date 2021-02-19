@@ -6,7 +6,7 @@
     <string name="episode_ns">Episodio %s</string>
     <string name="episodes">Episodios</string>
     <string name="featured">Semanales</string>
-    <string name="other_anime">Nuevos OVAs y peliculas</string>
+    <string name="latest_series">Nuevos OVAs y peliculas</string>
     <string name="top_anime">Top 10 Anime</string>
     <string name="latest_added">Nuevas adiciones</string>
     <string name="movies">Peliculas</string>
@@ -27,4 +27,12 @@
     <string name="browse">Descubre</string>
     <string name="continue_watching">Sigue mirando</string>
     <string name="next_episode">Episodio %d proximamente</string>
+    <string name="latest_movies">Ultimas Películas</string>
+    <string name="latest_ovas">Ultimos OVAs</string>
+    <string name="serie">Serie</string>
+    <string name="movie">Película</string>
+    <string name="ova">OVA</string>
+    <string name="special">Especial</string>
+    <string name="preview">Avance</string>
+    <string name="episodes_selector">%d hasta %d</string>
 </resources>

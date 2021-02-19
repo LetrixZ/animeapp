@@ -1,4 +1,4 @@
-package com.letrix.anime.ui.genre
+package com.letrix.anime.ui.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,13 @@ import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.letrix.anime.R
 import com.letrix.anime.data.Anime
 import com.letrix.anime.databinding.ItemAnimeBinding
 import com.letrix.anime.utils.ImageLoader
 
 
-class GenrePagingAdapter(private val listener: ItemClickListener) :
-    PagingDataAdapter<Anime, GenrePagingAdapter.ItemHolder>(ITEM_COMPARATOR) {
+class ListPagingAdapter(private val listener: ItemClickListener) :
+    PagingDataAdapter<Anime, ListPagingAdapter.ItemHolder>(ITEM_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val binding = ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -48,8 +47,6 @@ class GenrePagingAdapter(private val listener: ItemClickListener) :
             binding.apply {
                 ImageLoader.loadImage(item.poster, poster)
                 title.text = item.title
-                extra.text =
-                    binding.root.context.resources.getQuantityString(R.plurals.type_episodes, item.totalEpisodes!!, item.type, item.totalEpisodes)
                 extra.isVisible = true
                 clickableLayout.setOnClickListener {
                     listener.onClick(item)

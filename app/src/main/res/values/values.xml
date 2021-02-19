@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="YouTubePlayerSeekBar">
+        <attr name="fontSize" format="dimension" />
+        <attr name="color" format="color" />
+        <attr name="showDuration" format="boolean" />
+        <attr name="showCurrentTime" format="boolean" />
+        <attr name="showThumb" format="boolean" />
+        <attr name="seekFullWidth" format="boolean" />
+        <attr name="seekBarThickness" format="dimension" />
+        <attr name="customSeekBar" format="reference" />
+        <attr name="customThumb" format="reference" />
+        <attr name="seakable" format="boolean" />
+    </declare-styleable>
+</resources>

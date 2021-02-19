@@ -1,4 +1,4 @@
-package com.letrix.anime.network
+package com.letrix.anime.utils
 
 import android.content.Context
 import android.net.ConnectivityManager

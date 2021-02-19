@@ -16,7 +16,8 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/browse"
-        android:textSize="32sp" />
+        android:textSize="32sp"
+        android:visibility="gone" />
 
     <View
         android:id="@+id/shadow"
@@ -24,13 +25,15 @@
         android:layout_height="0.1dp"
         android:background="@drawable/shadow"
         android:rotation="180"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/header_text" />
 
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="0dp"
@@ -53,15 +56,17 @@
             android:src="@drawable/ic_search" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_text"
-        tools:listitem="@layout/item_row" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_text"
+            tools:listitem="@layout/item_row" />
 
     <TextView
         android:id="@+id/error_message"

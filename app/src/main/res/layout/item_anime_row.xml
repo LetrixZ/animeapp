@@ -39,6 +39,7 @@
             tools:text="Shingeki no Kyojin The Final Season" />
 
         <TextView
+            android:textSize="14sp"
             android:id="@+id/type_episodes"
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"

@@ -32,6 +32,7 @@ import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
 import timber.log.Timber
 import timber.log.Timber.d
+import timber.log.Timber.e
 import java.io.*
 
 @AndroidEntryPoint
@@ -65,17 +66,39 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
         }
 
         if (savedInstanceState == null) {
-            getContent()
+            tempFuncGet()
         } else {
             serverList.addAll(Gson().fromJson(savedInstanceState.getString("list"), object : TypeToken<List<Server>>() {}.type) as List<Server>)
             setView()
         }
 
-        ready.observe(viewLifecycleOwner, {
-            if (it >= 2) {
-                setView()
+    }
+
+    private fun tempFuncGet() {
+        lifecycleScope.launch {
+            binding.progressBar.isVisible = true
+            var list: List<Server>? = getServers()?.map { // is a shorter way to write IntRange(0, 10)
+                async { // async means "concurrently", context goes here
+                    when (it.name) {
+                        "Okru" -> getOkru(it.mirrors[0].url)
+                        "Fembed" -> getFembed(it.mirrors[0].url)
+                        "Stape" -> getStape(it.mirrors[0].url)
+                        "YourUpload" -> getYourUpload(it.mirrors[0].url)
+                        "Maru" -> getMaru(it.mirrors[0].url)
+                        else -> it
+                    }
+                }
+            }?.awaitAll()?.filterNotNull()
+            list =
+                list?.filter { server -> server.name != "MEGA" && server.name != "Netu" && server.name != "Maru" && server.name != "Mega" }
+            /*list?.forEach { it.name = it.name + " (jkAnime)" }*/
+            if (list != null) {
+                serverList.addAll(list)
             }
-        })
+
+            ready.value = ready.value?.plus(1)
+            setView()
+        }
     }
 
     private suspend fun getFlv() {
@@ -125,7 +148,8 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
                     }
                 }
             }?.awaitAll()?.filterNotNull()
-            list = list?.filter { server -> server.name != "MEGA" && server.name != "YourUpload" && server.name != "Netu" && server.name != "Maru" && server.name != "Mega" }
+            list =
+                list?.filter { server -> server.name != "MEGA" && server.name != "YourUpload" && server.name != "Netu" && server.name != "Maru" && server.name != "Mega" }
             list?.forEach { it.name = it.name + " (jkAnime)" }
             if (list != null) {
                 serverList.addAll(list)
@@ -187,7 +211,40 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
         }
     }
 
-    private suspend fun getStape(url: String): Server? {
+    private suspend fun getMaru(url: String): Server? {
+        return withContext(IO) {
+            var count = 0
+            val maxTries = 3
+            var server: Server? = null
+            while (count < maxTries) {
+                try {
+                    val sourceResponse = Jsoup.connect(url)
+                        .timeout(10000)
+                        .userAgent("Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19")
+                        .ignoreContentType(true)
+                        .execute()
+                    val doc = sourceResponse.parse()
+                    d(sourceResponse.cookie("video_key"))
+                    d(doc.toString())
+                    val apiResponse = Jsoup.connect(RestConfig.MARU_API)
+                        .timeout(10000)
+                        .data("source", Util.encodeResponse(doc.text().toString() + "\n${sourceResponse.cookie("video_key")}"))
+                        .method(Connection.Method.POST)
+                        .ignoreContentType(true)
+                        .execute().body()
+                    server = Gson().fromJson(apiResponse, Server::class.java)
+                    break
+                } catch (e: Exception) {
+                    e(e)
+                    server = null
+                    count++
+                }
+            }
+            return@withContext server
+        }
+    }
+
+    private suspend fun getYourUpload(url: String): Server? {
         return withContext(IO) {
             var count = 0
             val maxTries = 3
@@ -199,6 +256,36 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
                         /*.userAgent("Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19")*/
                         .ignoreContentType(true)
                         .get().body()
+                    val apiResponse = Jsoup.connect(RestConfig.YUPLOAD_APU)
+                        .timeout(10000)
+                        .data("source", Util.encodeResponse(sourceResponse.toString()))
+                        .method(Connection.Method.POST)
+                        .ignoreContentType(true)
+                        .execute().body()
+                    server = Gson().fromJson(apiResponse, Server::class.java)
+                    break
+                } catch (e: Exception) {
+                    e(e)
+                    server = null
+                    count++
+                }
+            }
+            return@withContext server
+        }
+    }
+
+    private suspend fun getStape(url: String): Server? {
+        return withContext(IO) {
+            var count = 0
+            val maxTries = 3
+            var server: Server? = null
+            while (count < maxTries) {
+                try {
+                    val sourceResponse = Jsoup.connect(url)
+                        .timeout(10000)
+                        .userAgent("Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19")
+                        .ignoreContentType(true)
+                        .get().body()
                     val apiResponse = Jsoup.connect(RestConfig.STAPE_API)
                         .timeout(10000)
                         .data("source", Util.encodeResponse(sourceResponse.toString()))
@@ -208,7 +295,7 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
                     server = Gson().fromJson(apiResponse, Server::class.java)
                     break
                 } catch (e: Exception) {
-                    d(e)
+                    e(e)
                     server = null
                     count++
                 }

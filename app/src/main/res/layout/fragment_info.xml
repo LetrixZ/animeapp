@@ -73,7 +73,7 @@
                     android:textAllCaps="true"
                     android:textColor="#4CAF50"
                     android:textStyle="bold"
-                    tools:text="En emision" />
+                    tools:text="Ongoing" />
 
                 <TextView
                     android:id="@+id/synonyms"
@@ -86,7 +86,13 @@
                     android:id="@+id/type_episodes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Serie | En Emision | 5 episodios de 24 min" />
+                    tools:text="Serie | 6 episodes" />
+
+                <TextView
+                    android:id="@+id/next_episode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="2021-02-16" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/genres"

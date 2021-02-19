@@ -44,11 +44,18 @@ class SearchPagingAdapter(private val listener: ItemClickListener) :
         }
 
         fun bind(item: Anime) {
+            val context = binding.root.context
             binding.apply {
                 ImageLoader.loadImage(item.poster, poster)
                 title.text = item.title
-                typeEpisodes.text =
-                    binding.root.context.resources.getQuantityString(R.plurals.type_episodes, item.totalEpisodes!!, item.type, item.totalEpisodes)
+//                typeEpisodes.text = binding.root.context.resources.getQuantityString(R.plurals.type_episodes, item.totalEpisodes!!, item.type, item.totalEpisodes)
+                typeEpisodes.text = when (item.type) {
+                    "Anime" -> context.getString(R.string.serie)
+                    "Película" -> context.getString(R.string.movie)
+                    "OVA" -> context.getString(R.string.ova)
+                    "Especial" -> context.getString(R.string.special)
+                    else -> ""
+                }
             }
         }
     }

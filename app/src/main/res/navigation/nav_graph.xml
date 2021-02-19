@@ -2,26 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/fragmentHome">
+    app:startDestination="@id/pagerFragment">
     <fragment
         android:id="@+id/fragmentHome"
         android:name="com.letrix.anime.ui.home.HomeFragment"
-        android:label="FragmentHome">
-        <action
-            android:id="@+id/action_fragmentHome_to_infoFragment"
-            app:destination="@id/infoFragment"
-            app:enterAnim="@anim/slide_in_right_2"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_right_2" />
-        <action
-            android:id="@+id/action_fragmentHome_to_searchFragment"
-            app:destination="@id/searchFragment"
-            app:enterAnim="@anim/slide_in_right_2"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_right_2" />
-    </fragment>
+        android:label="FragmentHome"/>
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.letrix.anime.ui.info.InfoFragment"
@@ -29,13 +14,6 @@
         <argument
             android:name="id"
             app:argType="string" />
-        <action
-            android:id="@+id/action_infoFragment_to_genreFragment"
-            app:destination="@id/genreFragment"
-            app:enterAnim="@anim/slide_in_right_2"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_right_2" />
         <argument
             android:name="anime"
             app:argType="com.letrix.anime.data.Anime" />
@@ -47,13 +25,6 @@
         <argument
             android:name="genre"
             app:argType="string" />
-        <action
-            android:id="@+id/action_genreFragment_to_infoFragment"
-            app:destination="@id/infoFragment"
-            app:enterAnim="@anim/slide_in_right_2"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_right_2" />
     </fragment>
     <fragment
         android:id="@+id/serverBottomSheet"
@@ -80,9 +51,6 @@
             android:name="selected"
             android:defaultValue="0"
             app:argType="integer" />
-        <argument
-            android:name="episode"
-            app:argType="com.letrix.anime.room.Anime$Episode" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -95,5 +63,32 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out_right_2" />
+    </fragment>
+    <fragment
+        android:id="@+id/pagerFragment"
+        android:name="com.letrix.anime.ui.pager.PagerFragment"
+        android:label="PagerFragment">
+        <action
+            android:id="@+id/action_pagerFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_right_2"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right_2" />
+        <action
+            android:id="@+id/action_pagerFragment_to_infoFragment"
+            app:destination="@id/infoFragment"
+            app:enterAnim="@anim/slide_in_right_2"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right_2" />
+    </fragment>
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.letrix.anime.ui.list.ListFragment"
+        android:label="ListFragment" >
+        <argument
+            android:name="type"
+            app:argType="string" />
     </fragment>
 </navigation>

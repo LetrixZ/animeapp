@@ -59,6 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/red_500"
+                        android:visibility="gone"
                         android:text="Mark as Watched" />
 
                     <TextView
@@ -95,6 +96,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="Serie | En Emision | 5 episodios de 24 min" />
+
+                    <TextView
+                        android:id="@+id/next_episode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2021-02-16" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/genres"

@@ -5,18 +5,20 @@ import android.os.Parcelable
 
 data class Server(
     var name: String,
-    val mirrors: List<Mirror>
+    val mirrors: List<Mirror>,
+    val cookie: String?
 ) : Parcelable {
     var index: Int = 0
 
-    fun selected(): Mirror = mirrors[index]
-
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
-        parcel.createTypedArrayList(Mirror)!!
+        parcel.createTypedArrayList(Mirror)!!,
+        parcel.readString()
     ) {
         index = parcel.readInt()
     }
+
+    fun selected(): Mirror = mirrors[index]
 
     data class Mirror(
         val quality: String,
@@ -51,6 +53,7 @@ data class Server(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeTypedList(mirrors)
+        parcel.writeString(cookie)
         parcel.writeInt(index)
     }
 
@@ -67,4 +70,5 @@ data class Server(
             return arrayOfNulls(size)
         }
     }
+
 }

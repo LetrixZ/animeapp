@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import com.letrix.anime.R
 import com.letrix.anime.data.Anime
 import com.letrix.anime.databinding.FragmentSearchBinding
+import com.letrix.anime.ui.pager.PagerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -61,6 +62,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchPagingAdapter.I
                 ) {
                     recyclerView.isVisible = false
                     errorMessage.isVisible = true
+                    errorMessage.text = getString(R.string.no_results)
                 } else {
                     errorMessage.isVisible = false
                 }
@@ -83,14 +85,24 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchPagingAdapter.I
                 true
             } else false
         }
+
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        inputMethodManager.hideSoftInputFromWindow(
+            binding.editBox.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
         _binding = null
     }
 
     override fun onClick(item: Anime) {
-        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToInfoFragment(item.id, item))
+//        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToInfoFragment(item.id, item))
+        findNavController().navigate(PagerFragmentDirections.actionPagerFragmentToInfoFragment(item.id, item))
     }
+
 }

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <attr name="chipBackground" format="color"/>
-    <attr name="progressBackground" format="color"/>
+    <attr name="chipBackground" format="color" />
+    <attr name="progressBackground" format="color" />
 
     <!-- Base application theme. -->
     <style name="Theme.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -15,6 +15,9 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>-->
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/dark_700</item>
         <item name="android:textColorPrimary">@color/black</item>

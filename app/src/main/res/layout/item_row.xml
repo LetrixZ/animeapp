@@ -16,13 +16,21 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Featured weeklies" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.letrix.anime.utils.NestedScrollableHost
+        android:id="@+id/nested_scrollable_host"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/item_header"
-        tools:listitem="@layout/item_anime" />
+        app:layout_constraintTop_toBottomOf="@id/item_header">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/item_header"
+            tools:listitem="@layout/item_anime" />
+
+    </com.letrix.anime.utils.NestedScrollableHost>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,13 +3,14 @@ package com.letrix.anime.ui.info
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.letrix.anime.data.Genre
 import com.letrix.anime.databinding.ItemChipBinding
 
-class GenreAdapter(private val list: List<String>, private val clickListener: OnItemClickListener) :
+class GenreAdapter(private val list: List<Genre>, private val clickListener: OnItemClickListener) :
     RecyclerView.Adapter<GenreAdapter.ItemHolder>() {
     inner class ItemHolder(private val binding: ItemChipBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind(genre: String) {
-            binding.text.text = genre
+        fun onBind(genre: Genre) {
+            binding.text.text = genre.title
             binding.clickableLayout.setOnClickListener {
                 clickListener.onClick(genre)
             }
@@ -26,6 +27,6 @@ class GenreAdapter(private val list: List<String>, private val clickListener: On
     override fun getItemCount(): Int = list.size
 
     interface OnItemClickListener {
-        fun onClick(genre: String)
+        fun onClick(genre: Genre)
     }
 }
