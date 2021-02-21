@@ -35,6 +35,8 @@
     <string name="search_title">Search</string>
     <string name="genre_title">Genres</string>
     <string name="year_title">Year</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="themes">Themes</string>
     <plurals name="type_episodes">
         <item quantity="one">%s | %d episode</item>
         <item quantity="other">%s | %d episodes</item>

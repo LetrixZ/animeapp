@@ -16,7 +16,6 @@ import com.letrix.anime.ui.AnimeAdapter
 import com.letrix.anime.ui.ScrollStateHolder
 import com.letrix.anime.ui.home.adapter.ParentAdapter
 import com.letrix.anime.ui.info.ServerBottomSheet
-import com.letrix.anime.ui.pager.PagerFragmentDirections
 import com.letrix.anime.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +37,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickLis
         scrollStateHolder = ScrollStateHolder(viewModel.bundle)
 
         setupObserver()
+
+        binding.search.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToSearchFragment())
+        }
 
         /*binding.bookmarks.setOnClickListener {
             if (fullscreen) activity?.showSystemUI()
@@ -107,7 +110,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AnimeAdapter.ItemClickLis
     }
 
     override fun onAnime(item: Anime) {
-        findNavController().navigate(PagerFragmentDirections.actionPagerFragmentToInfoFragment(item.id, item))
+        findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToInfoFragment(item.id, item))
     }
 
     override fun onEpisode(episode: Int, item: Anime) {

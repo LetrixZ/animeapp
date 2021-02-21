@@ -13,6 +13,7 @@ class MiranimeRepository
 @Inject constructor(private val service: MiranimeService) {
 
     suspend fun getHome(): List<Anime.List> = service.getHome()
+    suspend fun getHomeJK(): List<Anime.List> = service.getHomeJK()
     suspend fun getInfo(id: String): Anime = service.getInfo(id)
     suspend fun getServers(id: String, episode: Int) = service.getServers(id, episode)
     suspend fun genreList() = service.genreList()

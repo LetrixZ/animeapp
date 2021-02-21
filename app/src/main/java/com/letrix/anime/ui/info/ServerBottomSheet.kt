@@ -21,6 +21,7 @@ import com.letrix.anime.data.Server
 import com.letrix.anime.databinding.BottomSheetServerBinding
 import com.letrix.anime.network.RestConfig
 import com.letrix.anime.network.RestConfig.Companion.JKANIME_API
+import com.letrix.anime.ui.info.adapters.ServerAdapter
 import com.letrix.anime.utils.Status.*
 import com.letrix.anime.utils.Util
 import dagger.hilt.android.AndroidEntryPoint
@@ -224,8 +225,6 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
                         .ignoreContentType(true)
                         .execute()
                     val doc = sourceResponse.parse()
-                    d(sourceResponse.cookie("video_key"))
-                    d(doc.toString())
                     val apiResponse = Jsoup.connect(RestConfig.MARU_API)
                         .timeout(10000)
                         .data("source", Util.encodeResponse(doc.text().toString() + "\n${sourceResponse.cookie("video_key")}"))
@@ -311,18 +310,25 @@ class ServerBottomSheet : BottomSheetDialogFragment(), ServerAdapter.ServerClick
             var server: Server? = null
             while (count < maxTries) {
                 try {
-                    val sourceResponse = Jsoup.connect(url)
-                        .timeout(15000)
-                        .userAgent("Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19")
-                        .ignoreContentType(true)
-                        .post().body().text()
-                    val apiResponse = Jsoup.connect(RestConfig.FEMBED_API)
-                        .timeout(10000)
-                        .data("source", Util.encodeResponse(sourceResponse))
-                        .method(Connection.Method.POST)
-                        .ignoreContentType(true)
-                        .execute().body()
-                    server = Gson().fromJson(apiResponse, Server::class.java)
+                    val regex = Regex("""[^/]+(?=/${'$'}|${'$'})""")
+                    val fembedPostUrl = regex.find(url)?.value
+                    if (fembedPostUrl != null) {
+                        d("https://www.fembed.com/api/source/${fembedPostUrl}")
+                        val sourceResponse = Jsoup.connect("https://www.fembed.com/api/source/${fembedPostUrl}")
+                            .timeout(15000)
+                            .userAgent("Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19")
+                            .ignoreContentType(true)
+                            .post().body().text()
+                        val apiResponse = Jsoup.connect(RestConfig.FEMBED_API)
+                            .timeout(10000)
+                            .data("source", Util.encodeResponse(sourceResponse))
+                            .method(Connection.Method.POST)
+                            .ignoreContentType(true)
+                            .execute().body()
+                        server = Gson().fromJson(apiResponse, Server::class.java)
+                    } else {
+                        server = null
+                    }
                     break
                 } catch (e: Exception) {
                     d(e)

@@ -56,14 +56,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:alpha="1"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:scaleType="centerCrop"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="@id/youtube_player_view"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/RoundCorner"
                     tools:src="@sample/thumbnail" />
+
+                <ImageView
+                    android:id="@+id/replay_button"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:elevation="4dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/banner"
+                    app:layout_constraintEnd_toEndOf="@id/banner"
+                    app:layout_constraintStart_toStartOf="@id/banner"
+                    app:layout_constraintTop_toTopOf="@id/banner"
+                    app:srcCompat="@drawable/ic_replay"
+                    app:tint="@color/white"
+                    tools:visibility="visible" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -188,15 +206,131 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:overScrollMode="never"
-                    tools:itemCount="4" />
+                    tools:itemCount="1" />
 
-                <TextView
-                    android:id="@+id/synopsis"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/expandable_card"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:ellipsize="end"
-                    tools:text="Una historia de chicas con problemas, tejida por el guionista Shinji Nojima en el mundo del anime.Dirigida por una voz misteriosa durante un paseo de medianoche, Ai Ooto, de 14 años, recoge un huevo." />
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ToggleButton
+                            android:id="@+id/expandable_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:clickable="false"
+                            android:drawableEnd="@drawable/selector_arrow"
+                            android:focusable="false"
+                            android:padding="12dp"
+                            android:text="@string/synopsis"
+                            android:textOff="@string/synopsis"
+                            android:textOn="@string/synopsis" />
+
+                        <net.cachapa.expandablelayout.ExpandableLayout
+                            android:id="@+id/expandable"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:el_duration="300"
+                            app:el_expanded="false"
+                            app:el_parallax="0.5">
+
+                            <TextView
+                                android:id="@+id/synopsis"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="12dp"
+                                android:layout_marginBottom="8dp"
+                                android:ellipsize="end"
+                                tools:text="Una historia de chicas con problemas, tejida por el guionista Shinji Nojima en el mundo del anime.Dirigida por una voz misteriosa durante un paseo de medianoche, Ai Ooto, de 14 años, recoge un huevo." />
+
+                        </net.cachapa.expandablelayout.ExpandableLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/themes_expandable_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ToggleButton
+                            android:id="@+id/themes_expandable_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:clickable="false"
+                            android:drawableEnd="@drawable/selector_arrow"
+                            android:focusable="false"
+                            android:padding="12dp"
+                            android:text="@string/synopsis"
+                            android:textOff="@string/themes"
+                            android:textOn="@string/themes" />
+
+                        <net.cachapa.expandablelayout.ExpandableLayout
+                            android:id="@+id/themes_expandable"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:el_duration="300"
+                            app:el_expanded="false"
+                            app:el_parallax="0.5">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ProgressBar
+                                    android:id="@+id/themes_progress_bar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="60dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/themes_error_message"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:paddingHorizontal="30dp"
+                                    android:paddingVertical="15dp"
+                                    android:textAlignment="center"
+                                    android:textSize="18sp"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/themes_recycler"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </net.cachapa.expandablelayout.ExpandableLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <Spinner
                     android:id="@+id/episodes_spinner"
@@ -234,7 +368,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/info_layout"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

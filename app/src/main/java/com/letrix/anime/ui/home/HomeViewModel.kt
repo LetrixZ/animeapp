@@ -27,14 +27,13 @@ class HomeViewModel @Inject constructor(
     val bundle = Bundle()
 
     init {
-        _home.postValue(Resource.loading(null))
+        _home.postValue(Resource.loading())
 
         if (networkHelper.isNetworkConnected()) {
             fetchHome()
         } else {
             _home.postValue(
                 Resource.error(
-                    data = null,
                     message = internetErr
                 )
             )
@@ -47,7 +46,6 @@ class HomeViewModel @Inject constructor(
                 Resource.success(data = miranimeRepository.getHome())
             } catch (exception: Exception) {
                 Resource.error(
-                    data = null,
                     message = exception.message ?: otherErr
                 )
             }

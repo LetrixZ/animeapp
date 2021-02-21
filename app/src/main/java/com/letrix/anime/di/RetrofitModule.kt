@@ -3,6 +3,7 @@ package com.letrix.anime.di
 import com.google.gson.GsonBuilder
 import com.letrix.anime.network.JkService
 import com.letrix.anime.network.RestConfig
+import com.letrix.anime.network.animethemes.ThemesService
 import com.letrix.anime.network.jikan.JikanService
 import com.letrix.anime.network.miranime.MiranimeService
 import dagger.Module
@@ -52,6 +53,17 @@ object RetrofitModule {
     }
 
     @Singleton
+    @Provides
+    fun provideThemesService(client: OkHttpClient): ThemesService {
+        return Retrofit.Builder()
+            .baseUrl(RestConfig.THEMES_API)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .build()
+            .create(ThemesService::class.java)
+    }
+
+   @Singleton
     @Provides
     fun provideJikanService(client: OkHttpClient): JikanService {
         return Retrofit.Builder()

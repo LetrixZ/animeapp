@@ -1,4 +1,4 @@
-package com.letrix.anime.ui.info
+package com.letrix.anime.ui.info.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

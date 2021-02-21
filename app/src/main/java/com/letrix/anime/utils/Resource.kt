@@ -6,18 +6,21 @@ data class Resource<out T>(val status: Status, val data: T?, val message: String
             Resource(
                 status = Status.SUCCESS,
                 data = data,
-                message = null)
+                message = null
+            )
 
-        fun <T> error(data: T?, message: String): Resource<T> =
+        fun <T> error(message: String): Resource<T> =
             Resource(
                 status = Status.ERROR,
-                data = data,
-                message = message)
+                data = null,
+                message = message
+            )
 
-        fun <T> loading(data: T?): Resource<T> =
+        fun <T> loading(): Resource<T> =
             Resource(
                 status = Status.LOADING,
-                data = data,
-                message = null)
+                data = null,
+                message = null
+            )
     }
 }

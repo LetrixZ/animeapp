@@ -15,9 +15,8 @@ import com.letrix.anime.R
 import com.letrix.anime.data.Anime
 import com.letrix.anime.data.Genre
 import com.letrix.anime.databinding.FragmentGenreBinding
-import com.letrix.anime.ui.info.GenreAdapter
-import com.letrix.anime.ui.info.YearAdapter
-import com.letrix.anime.ui.pager.PagerFragmentDirections
+import com.letrix.anime.ui.info.adapters.GenreAdapter
+import com.letrix.anime.ui.info.adapters.YearAdapter
 import com.letrix.anime.ui.search.LoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -164,7 +163,7 @@ class ListFragment : Fragment(R.layout.fragment_list), ListPagingAdapter.ItemCli
     }
 
     override fun onClick(item: Anime) {
-        findNavController().navigate(PagerFragmentDirections.actionPagerFragmentToInfoFragment(item.id, item))
+        findNavController().navigate(ListFragmentDirections.actionListFragmentToInfoFragment(item.id, item))
     }
 
 }

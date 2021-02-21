@@ -5,6 +5,7 @@
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="dark_200">#bababa</color>
+    <color name="dark_400">#333333</color>
     <color name="dark_500">#181818</color>
     <color name="dark_600">#121212</color>
     <color name="dark_700">#0e0e0e</color>
@@ -20,5 +21,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white_light">#fafafa</color>
-    <color name="white_lighter">#E6E6E6</color>
+    <color name="white_lighter">#D9D9D9</color>
 </resources>

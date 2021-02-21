@@ -12,8 +12,11 @@ interface MiranimeService {
     @GET("/api/v1/animeflv/home")
     suspend fun getHome(): List<Anime.List>
 
+    @GET("/api/v1/jkanime/home")
+    suspend fun getHomeJK(): List<Anime.List>
+
     @GET("/api/v1/animeflv/info/{id}")
-    suspend fun getInfo(@Path("id") id: String, @Query("extra") extra: Int = 0): Anime
+    suspend fun getInfo(@Path("id") id: String, @Query("extra") extra: Int = 1): Anime
 
     @GET("/api/v1/animeflv/search")
     suspend fun search(@Query("q") query: String, @Query("page") page: Int): List<Anime>

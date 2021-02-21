@@ -2,6 +2,8 @@ package com.letrix.anime.network
 
 class RestConfig {
     companion object {
+//        const val THEMES_API = "http://192.168.1.40:5000/"
+        const val THEMES_API = "https://animethemes-js.herokuapp.com/"
         const val MIRANIME_API = "http://192.168.1.40:4000/api/v1/"
         const val JIKAN_API = "https://api.jikan.moe/"
 

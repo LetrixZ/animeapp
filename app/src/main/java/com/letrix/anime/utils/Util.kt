@@ -11,6 +11,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import com.letrix.anime.R
+import com.letrix.anime.data.AnimeThemes
 import java.nio.charset.StandardCharsets
 import java.util.*
 import kotlin.math.ln
@@ -159,6 +160,17 @@ object Util {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER
         }
+    }
+
+    fun getVideoTitle(item: AnimeThemes.Theme.Entry.Video): String {
+        var string = item.resolution.toString()
+        if (item.source.isNotEmpty() && item.source != "1080") string += ", ${item.source}"
+        if (item.over.isNotEmpty()) string += ", ${item.over}"
+        if (item.nc) string += ", no credits"
+        if (item.subbed) string += ", subbed"
+        if (item.lyrics) string += ", lyrics"
+        if (item.uncen) string += ", uncensored"
+        return string
     }
 
 }

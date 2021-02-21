@@ -1,4 +1,4 @@
-package com.letrix.anime.ui.info
+package com.letrix.anime.ui.info.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.letrix.anime.R
+import com.letrix.anime.ui.info.InfoFragment
 
 
 class EpisodeSpinnerAdapter(context: Context, list: List<InfoFragment.EpisodeList>) :

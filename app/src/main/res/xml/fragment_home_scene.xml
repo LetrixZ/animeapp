@@ -74,8 +74,7 @@
         android:id="@+id/transition"
         app:constraintSetEnd="@+id/end"
         app:constraintSetStart="@+id/start"
-        app:duration="0"
-        app:transitionDisable="true">
+        app:duration="0">
         <OnSwipe
             app:dragDirection="dragUp"
             app:moveWhenScrollAtTop="false"

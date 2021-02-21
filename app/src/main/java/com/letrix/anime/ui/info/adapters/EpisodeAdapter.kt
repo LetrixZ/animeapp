@@ -1,4 +1,4 @@
-package com.letrix.anime.ui.info
+package com.letrix.anime.ui.info.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.letrix.anime.R
 import com.letrix.anime.data.Anime
 import com.letrix.anime.databinding.ItemChipBinding
-import com.letrix.anime.utils.Util
 
 class EpisodeAdapter(
     private val clickListener: OnItemClick,

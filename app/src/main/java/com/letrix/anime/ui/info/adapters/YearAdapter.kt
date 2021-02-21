@@ -1,9 +1,8 @@
-package com.letrix.anime.ui.info
+package com.letrix.anime.ui.info.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.letrix.anime.data.Genre
 import com.letrix.anime.databinding.ItemChipBinding
 
 class YearAdapter(private val list: List<String>, private val clickListener: OnItemClickListener) :
